@@ -10,25 +10,24 @@ Tuning PySpark is the process of optimizing performance and reducing runtime for
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Memory Tuning](#memory-tuning)
+2. [Memory Tuning](##memory-tuning)
    - Adjusting memory for executors and driver
    - Configuring memory settings and using memory management techniques
-3. [Shuffle Tuning](#shuffle-tuning)
+3. [Shuffle Tuning](##shuffle-tuning)
    - Reducing time and cost of shuffle operations
    - Adjusting number of partitions and optimizing shuffle operations
-4. [Data Serialization](#data-serialization)
+4. [Data Serialization](##data-serialization)
    - Choosing efficient data formats and serialization techniques
-5. [Executor Tunning](#Executor-Tunning)
+5. [Executor Tunning](##Executor-Tunning)
    - Config executor, mem, core
-8. [Troubleshooting and Debugging](#troubleshooting-and-debugging)
+6. [Troubleshooting and Debugging](##troubleshooting-and-debugging)
    - Tools and methods for monitoring and debugging
-9. [References](#references)
 
 ## 1. Introduction
 
 This project covers various methods for optimizing PySpark performance. PySpark tuning includes adjusting memory, optimizing shuffle operations, managing parallelism, and more. By tuning each aspect, we can enhance performance and scalability.
 
-## 2. Memory Tuning(#memory-tuning)
+## 2. Memory Tuning
 
 ![Codespace](image/Capture.PNG)
 
