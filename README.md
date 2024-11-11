@@ -36,7 +36,7 @@ This project covers various methods for optimizing PySpark performance. PySpark 
 
 ![Codespace](image/Capture.PNG)
 
-# 2.1 On heap memory
+### 2.1 On heap memory
 In Spark, memory within each executor is divided into main components serving different purposes. Here is a detailed explanation of each memory component in Spark:
 
 1. `Execution Memory`
@@ -64,7 +64,7 @@ Since Spark version 1.6, Unified Memory Management allows Storage Memory and Exe
 When Storage Memory is not fully used, the remaining portion can be allocated to Execution Memory and vice versa.
 Memory can be split based on the parameters spark.memory.fraction (the total fraction used by Execution and Storage) and spark.memory.storageFraction (the ratio between Execution and Storage within this portion).
 
-# 2.2 Off heap memory
+### 2.2 Off heap memory
 
 In Spark, off-heap memory refers to memory that is allocated outside of the Java Virtual Machine (JVM) heap. Off-heap memory can improve Spark's performance and reduce memory management issues like garbage collection (GC) overhead, which can impact tasks with large datasets.
 
@@ -101,7 +101,7 @@ spark.conf.set("spark.memory.offHeap.size", "4g")
 -   Not Suitable for All Workloads: While off-heap memory can benefit tasks with high memory demands, it might not be necessary for smaller tasks or those not suffering from GC overhead.
 
 
-## Shuffle tunning
+## 3. Shuffle tunning
 
 In Spark, shuffle tuning refers to optimizing operations related to shuffle – the process of redistributing and moving data between tasks. Shuffle can be resource-intensive in terms of time and system resources, especially when dealing with large datasets or performing complex computations like joins and aggregations. Below are the techniques to optimize shuffle in Spark:
 
