@@ -255,7 +255,7 @@ df.write.parquet("data.parquet")
 
 Example : My system have 5 node, resource per node : 12 Core, 48GB ram
 
-### 1.Leave out : example 1 Core, 1 GB ram for(Cluster Management)(Per node)
+### 1. Leave out : example 1 Core, 1 GB ram for(Cluster Management)(Per node)
 
 ```sh
 # Resoure : 12 Core, 48 GB ram
@@ -263,3 +263,32 @@ Example : My system have 5 node, resource per node : 12 Core, 48GB ram
 12 core - 1 core = 11 core
 48GB - 1 GB = 47 GB
 ```
+
+### 2. Memory overhead
+memory overhead = max(384MB, 10% of spark.executor.memory)
+
+### 3. Core per executor 
+According to Spark, the number of cores from 3 to 5 cores is optimal for each executor.
+
+###4. Leave out : 1 core , 1 Gb for cluster
+
+```sh
+Resource cluster :
+-   Core = 11 * 5 - 1 = 54 Core
+-   Ram  = 47 * 5 - 1 = 234 GB
+
+Chose 5 core per 1 executor
+- Total executor = 54/ 5 = ~10 executor
+- mem per executor = 234/10 - max(384MB, 10% of spark.executor.memory) = 234/10 - 10%(234/10) = ~20GB
+```
+
+Totally, config of executor :
+
+```sh
+spark.executor.memory=20g
+spark.executor.cores = 5
+spark.driver.memory= 1Gb
+spark.driver.cores=1
+
+```
+
