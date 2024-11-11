@@ -34,4 +34,4 @@ This project covers various methods for optimizing PySpark performance. PySpark 
 
 ## 2. Memory Tuning
 
-![Codespace](image/1707004360663.png)
+![Codespace](image/Capture.PNG)
