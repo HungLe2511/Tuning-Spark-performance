@@ -39,25 +39,25 @@ This project covers various methods for optimizing PySpark performance. PySpark 
 ### 2.1 On heap memory
 In Spark, memory within each executor is divided into main components serving different purposes. Here is a detailed explanation of each memory component in Spark:
 
-1. `Execution Memory`
+#### 1. Execution Memory
    
 -   Function: Used to store intermediate data during computation tasks such as join, sort, aggregation, and shuffle. When a task requires temporary storage for calculations, this data is held in Execution Memory.
 -   Management: Execution Memory is dynamic and can share space with Storage Memory (thanks to Unified Memory). It will reduce the size of Storage Memory if additional memory is needed for computations.
 -   Note: Lack of Execution Memory can cause “spilling” — data is temporarily written to disk, which can reduce performance.
 
-2. `Storage Memory`
+#### 2. Storage Memory
 
 -   Function: Used to store cached (buffered) data, broadcast variables, and objects that need to be retained across tasks (such as cached DataFrames or RDDs). Storage Memory is crucial for applications that reuse the same data multiple times.
 -   Management: Like Execution Memory, Storage Memory is also dynamic and can relinquish space to Execution Memory when necessary. If Storage Memory exceeds its capacity, Spark will evict or free up the least-used data.
 -   Note: Ensuring sufficient Storage Memory for cached data helps prevent Spark from evicting data or moving it to disk, which can impact performance.
 
-3. `Reserved Memory`
+#### 3. Reserved Memory
 
 -   Function: Reserved specifically for Spark's internal tasks, such as storing system objects and managing executor information. Reserved Memory is typically quite small and not configurable, but it ensures that Spark always has enough memory for these internal needs.
 -   Management: Reserved Memory does not share space with other memory blocks. The size of Reserved Memory is usually fixed and occupies a small portion of the total memory.
 -   Note: This memory is not adjustable by the user, as it is crucial to Spark’s stability and for meeting its system requirements.
 
-4. `Unified Memory Management`
+#### 4. Unified Memory Management
    
 Since Spark version 1.6, Unified Memory Management allows Storage Memory and Execution Memory to share the same memory pool. This increases the efficiency of Spark’s memory resources:
 
@@ -69,13 +69,13 @@ Memory can be split based on the parameters spark.memory.fraction (the total fra
 In Spark, off-heap memory refers to memory that is allocated outside of the Java Virtual Machine (JVM) heap. Off-heap memory can improve Spark's performance and reduce memory management issues like garbage collection (GC) overhead, which can impact tasks with large datasets.
 
 Key Aspects of Off-Heap Memory in Spark
-1. `Why Use Off-Heap Memory?`
+#### 1. Why Use Off-Heap Memory?
 
 -   Reduce Garbage Collection (GC) Overhead: One of the main challenges with large-scale data processing in JVM-based systems like Spark is managing the overhead from frequent garbage collection. By moving some data off-heap, Spark reduces the pressure on the JVM heap and minimizes GC-related pauses.
 -   Memory Efficiency: Off-heap memory allows Spark to work directly with native memory, which can be more memory-efficient, especially for serialized data.
 -   Improved Performance: Off-heap memory can boost performance, particularly in tasks involving large amounts of data that would otherwise trigger GC frequently.
 
-2. `Off-Heap Memory Settings in Spark`
+#### 2. Off-Heap Memory Settings in Spark
 
 To use off-heap memory in Spark, you need to enable it and configure its allocation. Key parameters include:
 
@@ -88,13 +88,13 @@ spark.conf.set("spark.memory.offHeap.enabled", "true")
 ```sh
 spark.conf.set("spark.memory.offHeap.size", "4g")
 ```
-3. `Use Cases for Off-Heap Memory`
+#### 3. Use Cases for Off-Heap Memory
 
 -   Serialization Optimization: Off-heap memory is often used for storing serialized data, as it allows Spark to manage data outside the JVM heap, reducing serialization and deserialization costs.
 -   Efficient Caching: Off-heap memory can cache intermediate data, especially when using operations that require repeated access to cached data.
 -   Resouce Isolation in Multi-Tenant Environments: In systems where multiple Spark applications run concurrently, off-heap memory provides better control over resource allocation, ensuring that one application doesn’t consume all available JVM memory.
 
-4. `Trade-offs and Considerations`
+#### 4.Trade-offs and Considerations
 
 -   Native Memory Limitations: Off-heap memory is limited by the physical memory of the system. If you allocate too much off-heap memory, it can affect other applications and processes on the machine.
 -   Increased Complexity: Configuring and managing off-heap memory can add complexity to memory management in Spark. Proper monitoring and tuning are essential.
@@ -105,14 +105,14 @@ spark.conf.set("spark.memory.offHeap.size", "4g")
 
 In Spark, shuffle tuning refers to optimizing operations related to shuffle – the process of redistributing and moving data between tasks. Shuffle can be resource-intensive in terms of time and system resources, especially when dealing with large datasets or performing complex computations like joins and aggregations. Below are the techniques to optimize shuffle in Spark:
 
-1. `Optimize the Number of Partitions (Partition Tuning)`
+### 1. Optimize the Number of Partitions (Partition Tuning)
 -   Use spark.sql.shuffle.partitions: This parameter sets the number of partitions when performing shuffle operations (like joins, groupBy, etc.). The default value is often 200, but it can be adjusted based on the data size and cluster configuration.
   
 ```sh
 spark.conf.set("spark.sql.shuffle.partitions", "100")
 ```
 -   Align partitions with data scale: The number of partitions should be sufficient to split the data without generating too many small files, while still fully utilizing computational resources. If the number of partitions is too low, it may cause some partitions to hold too much data, leading to delays and uneven load distribution.
-2. `Use Broadcast Join to Reduce Shuffle`
+### 2. Use Broadcast Join to Reduce Shuffle
 -   Broadcast Join: When one of the tables in a join operation is small, you can broadcast (distribute) that table to all executors to avoid shuffling both tables.
   
 Enable broadcast join by setting spark.sql.autoBroadcastJoinThreshold to the maximum size of the small table:
@@ -128,7 +128,7 @@ large_df = spark.table("large_table")
 joined_df = large_df.join(F.broadcast(small_df), "key")
 ```
 
-3. `Adjust Shuffle Memory Allocation`
+### 3. Adjust Shuffle Memory Allocation
 -   Use shuffle memory effectively: The memory available for tasks in Spark includes space for both computation and storage, including shuffle. You can adjust memory parameters to optimize shuffle processing:
 
 ```sh
@@ -140,7 +140,7 @@ spark.conf.set("spark.memory.fraction", "0.6")  # Increase or decrease depending
 spark.conf.set("spark.shuffle.file.buffer", "32k")  # Default is 32k, but can be increased to reduce write load
 ```
 
-4. `Optimize I/O with Off-Heap Memory`
+### 4. Optimize I/O with Off-Heap Memory
 -   Spark can use off-heap memory for shuffle data, helping reduce the impact of garbage collection (GC) overhead on JVM memory.
 -   Configure spark.memory.offHeap.enabled and spark.memory.offHeap.size to enable and set the off-heap memory size for shuffle.
 
@@ -148,7 +148,7 @@ spark.conf.set("spark.shuffle.file.buffer", "32k")  # Default is 32k, but can be
 spark.conf.set("spark.memory.offHeap.enabled", "true")
 spark.conf.set("spark.memory.offHeap.size", "4g")
 ```
-5. `Optimize Shuffle Sort and Merge`
+### 5. Optimize Shuffle Sort and Merge
 -   Use shuffle consolidation: Spark can reduce the number of files written to disk during shuffle by consolidating multiple smaller files into larger ones. The spark.shuffle.consolidateFiles parameter helps merge files to reduce the number of output files and improve I/O performance.
 
 ```sh
