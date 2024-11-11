@@ -28,7 +28,7 @@ Tuning PySpark is the process of optimizing performance and reducing runtime for
 
 This project covers various methods for optimizing PySpark performance. PySpark tuning includes adjusting memory, optimizing shuffle operations, managing parallelism, and more. By tuning each aspect, we can enhance performance and scalability.
 
-## 2. Memory Tuning
+## 2. Memory Tuning(#memory-tuning)
 
 ![Codespace](image/Capture.PNG)
 
