@@ -252,3 +252,14 @@ df.write.parquet("data.parquet")
 ## 5. Executor tunning
 
 ![Codespace](image/Capture2.PNG)
+
+Example : My system have 5 node, resource per node : 12 Core, 48GB ram
+
+### 1.Leave out : example 1 Core, 1 GB ram for(Cluster Management)(Per node)
+
+```sh
+# Resoure : 12 Core, 48 GB ram
+# Leave out 1 core and 1 GB ram
+12 core - 1 core = 11 core
+48GB - 1 GB = 47 GB
+```
