@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/14481e36-bedc-476f-b31c-361ac06ffbe8)# Prerequisite
+# Prerequisite
 Using basic:
 -  Python
 -  pyspark
