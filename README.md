@@ -1,4 +1,4 @@
-# Prerequisite
+![image](https://github.com/user-attachments/assets/14481e36-bedc-476f-b31c-361ac06ffbe8)# Prerequisite
 Using basic:
 -  Python
 -  pyspark
@@ -34,3 +34,4 @@ This project covers various methods for optimizing PySpark performance. PySpark 
 
 ## 2. Memory Tuning
 
+![Codespace](image/1707004360663.png)
