@@ -41,13 +41,13 @@ In Spark, memory within each executor is divided into main components serving di
 
 #### 1. Execution Memory
    
--   Function: Used to store intermediate data during computation tasks such as join, sort, aggregation, and shuffle. When a task requires temporary storage for calculations, this data is held in Execution Memory.
+-   Function: Used to store intermediate data during computation tasks such as `join`, `sort`, `aggregation`, and `shuffle`. When a task requires temporary storage for calculations, this data is held in Execution Memory.
 -   Management: Execution Memory is dynamic and can share space with Storage Memory (thanks to Unified Memory). It will reduce the size of Storage Memory if additional memory is needed for computations.
 -   Note: Lack of Execution Memory can cause “spilling” — data is temporarily written to disk, which can reduce performance.
 
 #### 2. Storage Memory
 
--   Function: Used to store cached (buffered) data, broadcast variables, and objects that need to be retained across tasks (such as cached DataFrames or RDDs). Storage Memory is crucial for applications that reuse the same data multiple times.
+-   Function: Used to store `cached` (buffered) data, broadcast variables, and objects that need to be retained across tasks (such as cached DataFrames or RDDs). Storage Memory is crucial for applications that reuse the same data multiple times.
 -   Management: Like Execution Memory, Storage Memory is also dynamic and can relinquish space to Execution Memory when necessary. If Storage Memory exceeds its capacity, Spark will evict or free up the least-used data.
 -   Note: Ensuring sufficient Storage Memory for cached data helps prevent Spark from evicting data or moving it to disk, which can impact performance.
 
@@ -66,7 +66,7 @@ Memory can be split based on the parameters spark.memory.fraction (the total fra
 
 ### 2.2 Off heap memory
 
-In Spark, off-heap memory refers to memory that is allocated outside of the Java Virtual Machine (JVM) heap. Off-heap memory can improve Spark's performance and reduce memory management issues like garbage collection (GC) overhead, which can impact tasks with large datasets.
+In Spark, off-heap memory refers to memory that is allocated outside of the Java Virtual Machine (JVM) heap. Off-heap memory can improve Spark's performance and reduce memory management issues like `garbage collection (GC)`overhead, which can impact tasks with large datasets.
 
 Key Aspects of Off-Heap Memory in Spark
 #### 1. Why Use Off-Heap Memory?
