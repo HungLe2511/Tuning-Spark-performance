@@ -16,10 +16,10 @@ Tuning PySpark is the process of optimizing performance and reducing runtime for
 3. [Shuffle Tuning](#shuffle-tuning)
    - Reducing time and cost of shuffle operations
    - Adjusting number of partitions and optimizing shuffle operations
-6. [Data Serialization](#data-serialization)
+4. [Data Serialization](#data-serialization)
    - Choosing efficient data formats and serialization techniques
-7. [Caching and Persistence](#caching-and-persistence)
-   - Using cache and persist functions to boost performance
+5. [Executor Tunning](#Executor-Tunning)
+   - Config executor, mem, core
 8. [Troubleshooting and Debugging](#troubleshooting-and-debugging)
    - Tools and methods for monitoring and debugging
 9. [References](#references)
@@ -246,3 +246,9 @@ df.write.parquet("data.parquet")
 ```
 
 -   Tuning Data Serialization: The performance of serialization depends on the nature of the data. For example, serialization of primitive types is generally faster than serialization of complex objects. Using the appropriate serialization format for the data (e.g., Parquet for structured data) is critical to achieving high performance in Spark.
+
+
+
+## 5. Executor tunning
+
+![Codespace](image/Capture2.PNG)
